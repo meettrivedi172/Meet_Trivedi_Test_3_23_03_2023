@@ -1,0 +1,155 @@
+<p>crud works!</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add
+</button>
+<!-- <ejs-grid #Grid id='Grid' [dataSource]='pogramer_data'   [editSettings]="editSetting "             allowPaging='true' [pageSettings]='pageSettings'[toolbar]='toolbar'   (actionComplete)='actionComplete($event)'> -->
+<ejs-grid #Grid id='Grid' [dataSource]='pogramer_data'>
+  <e-columns>
+    <e-column field='programID' headerText='programID' width='180' #id isPrimaryKey='true'></e-column>
+    <e-column field='programName' headerText='program Name' width='130'></e-column>
+    <e-column field='programNumber' headerText='program Number' width='150'></e-column>
+    <e-column field='programBudget' headerText='programBudget' width='120'></e-column>
+    <e-column field='programDescription' headerText='Disecription' width='120' format='C2' textAlign='Right'></e-column>
+    <e-column field='Action' headerText='Action' width='120'>
+      <ng-template #template let-pogramer_data>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+            (click)='Edit($event)'>
+            Edit</button>
+          <button type="button" class="btn btn-default" (click)="onactive(pogramer_data)">
+            {{pogramer_data.isActive == true? 'deactive':'active'}}</button>
+        </div>
+      </ng-template>
+    </e-column>
+  </e-columns>
+</ejs-grid>
+
+
+
+
+<!-- ADD FORM POP UP DAILOG  -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Pogram</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form #form [formGroup]="pogramer_form">
+
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">programName*</label>
+            <input type="text" formControlName="programName" class="form-control" id="exampleInputEmail1"
+              [(ngModel)]="programName" aria-describedby="emailHelp">
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">programNumber*</label>
+            <input type="text" formControlName="programNumber" class="form-control" id="exampleInputPassword1"
+              [(ngModel)]="programNumber">
+
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">programBudget*</label>
+            <input type="number" formControlName="programBudget" class="form-control" id="exampleInputPassword1"
+              [(ngModel)]="programBudget">
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">programDescription*</label>
+            <input type="text" formControlName="programDescription" class="form-control" id="exampleInputPassword1"
+              [(ngModel)]="programDescription">
+
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="isVirtual"
+              [(ngModel)]="isVirtual">
+            <label class="form-check-label" for="exampleCheck1">Virtual Pogram</label>
+          </div>
+          <!-- <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck2" formControlName="canDelete">
+            <label class="form-check-label" for="exampleCheck2">canDelete</label>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck3" formControlName="isActive">
+            <label class="form-check-label" for="exampleCheck3">isActive</label>
+          </div> -->
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="postdata()">Submit</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Edit pogram  -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Pogram</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form #form [formGroup]="pogramer_form">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">programID*</label>
+            <input [disabled]="false" type="text" formControlName="programID" class="form-control"
+              id="exampleInputEmail1" [(ngModel)]="programID" aria-describedby="emailHelp">
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">programName*</label>
+            <input type="text" formControlName="programName" class="form-control" id="exampleInputEmail1"
+              [(ngModel)]="programName" aria-describedby="emailHelp">
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">programNumber*</label>
+            <input type="text" formControlName="programNumber" class="form-control" id="exampleInputPassword1"
+              [(ngModel)]="programNumber">
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">programBudget*</label>
+            <input type="number" formControlName="programBudget" class="form-control" id="exampleInputPassword1"
+              [(ngModel)]="programBudget">
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">programDescription*</label>
+            <input type="text" formControlName="programDescription" class="form-control" id="exampleInputPassword1"
+              [(ngModel)]="programDescription">
+
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="isVirtual"
+              [(ngModel)]="isVirtual">
+            <label class="form-check-label" for="exampleCheck1">Virtual Pogram</label>
+          </div>
+
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="editData()">Submit</button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+#dialog-container {
+  display: block;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+}
